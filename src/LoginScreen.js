@@ -1,18 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom";
+import { useState,useEffect } from 'react';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
-export default function LoginScreen(){
+export default function LoginScreen({setUserInfo}){
+    const [sentRequest, setSentRequest] = useState(false)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const navigate =useNavigate();
+    useEffect(() => {
+        console.log(sentRequest)
+        if (sentRequest ===false){}
+        else{
+		const registration = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
+            {
+                email: email,
+                password:password
+            })
+            registration.then(promessa=>{handleResponse(promessa)})
+            registration.catch((error)=>{console.log("PEGO NO CATCH");console.log(error.response.data);setSentRequest(false)})
+	    }}, [sentRequest]);
 
+    function handleResponse(response){
+        setUserInfo({email:response.data.email,
+        id:response.data.id,
+        image:response.data.image,
+        name:response.data.name,
+        password:response.data.password,
+        token:response.data.token})
+        navigate(`/hoje`)
+        
+    }
     return(
     <LoginStyled>
-        <input placeholder='email'>
+        <input placeholder='email' value={email} onChange={(e)=>setEmail(e.target.value)}>
         </input>
-        <input placeholder='senha'>
-        
+        <input placeholder='senha' value={password} onChange={(e)=>setPassword(e.target.value)}>
         </input>
-        <button>Entrar</button>
+        <button onClick={()=>{setSentRequest(true)}}>Entrar</button>
+
         <Link to={`/cadastro`}>
         <p>Não tem uma conta? Cadastre-se!</p>
         </Link>

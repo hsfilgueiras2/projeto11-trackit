@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import axios from 'axios';
 
 export default function RegisterScreen() {
-    function submitRegistration(){
-        
-    }
+    const [sentRequest, setSentRequest] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
     const [image, setImage] = useState("")
+    useEffect(() => {
+        console.log(sentRequest)
+        if (sentRequest ===false){}
+        else{
+		const registration = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
+            {
+                email: email,
+                name: name,
+                image:image,
+                password:password
+            })
+            //registration.then(promessa=>console.log("PEGO NO THEN"))
+            registration.catch(error=>{console.log("PEGO NO CATCH");console.log(error.response.data.message);setSentRequest(false)})
+	    }}, [sentRequest]);
+
+    
+
+
+    if(sentRequest ===true){
+        return(
+            <h1>LOADING</h1>
+        )
+    }
     return (
         <RegisterStyled>
             <input placeholder='email' value={email} onChange={(e)=>setEmail(e.target.value)}>
@@ -20,7 +42,7 @@ export default function RegisterScreen() {
             </input>
             <input placeholder='foto' value={image} onChange={(e)=>setImage(e.target.value)}>
             </input>
-            <button onClick={()=>submitRegistration()}>Cadastrar</button>
+            <button onClick={()=>{setSentRequest(true)}}>Cadastrar</button>
             <Link to={"/"}>
             <p>Já tem uma conta? Faça login!</p>
             </Link>
