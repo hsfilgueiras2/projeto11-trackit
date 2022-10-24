@@ -7,7 +7,6 @@ import TodayScreen from "./TodayScreen"
 
 export default function App(){
 const [userInfo,setUserInfo] = useState({})
-console.log(userInfo)
 return(
     <>
 
@@ -16,7 +15,7 @@ return(
         <Routes>
             <Route path="/" element={<LoginScreen setUserInfo={setUserInfo} userInfo={userInfo}/>}></Route>
             <Route path="/cadastro" element={<RegisterScreen/>}></Route>
-            <Route path="/hoje" element={<TodayScreen/>}></Route>
+            <Route path="/hoje" element={<TodayScreen userInfo={userInfo} image={userInfo.image} />}></Route>
         </Routes>
     </BrowserRouter>
     </>

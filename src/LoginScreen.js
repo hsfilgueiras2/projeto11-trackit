@@ -5,6 +5,7 @@ import { useState,useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import logo from "./assets/imgs/TrackIt.png";
 
 
 export default function LoginScreen({setUserInfo}){
@@ -13,7 +14,6 @@ export default function LoginScreen({setUserInfo}){
     const [password, setPassword] = useState("")
     const navigate =useNavigate();
     useEffect(() => {
-        console.log(sentRequest)
         if (sentRequest ===false){}
         else{
 		const registration = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
@@ -22,7 +22,7 @@ export default function LoginScreen({setUserInfo}){
                 password:password
             })
             registration.then(promessa=>{handleResponse(promessa)})
-            registration.catch((error)=>{console.log("PEGO NO CATCH");console.log(error.response.data);setSentRequest(false)})
+            registration.catch((error)=>{setSentRequest(false)})
 	    }}, [sentRequest]);
 
     function handleResponse(response){
@@ -37,6 +37,7 @@ export default function LoginScreen({setUserInfo}){
     }
     return(
     <LoginStyled>
+        <img src={logo} alt='TrackIt Logo'></img>
         <input placeholder='email' value={email} onChange={(e)=>setEmail(e.target.value)}>
         </input>
         <input placeholder='senha' value={password} onChange={(e)=>setPassword(e.target.value)}>
@@ -50,6 +51,13 @@ export default function LoginScreen({setUserInfo}){
     </LoginStyled>)
 }
 const LoginStyled = styled.div`
+box-sizing: border-box;
+img{
+    height:180px;
+    width:180px;
+    margin-top:70px;
+    margin-bottom:32px;
+}
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -58,40 +66,34 @@ input{
     box-sizing: border-box;
     width: 303px;
 height: 45px;
-left: 36px;
-top: 330px;
-
+margin-bottom:6px;
 background: #FFFFFF;
 border: 1px solid #D5D5D5;
 border-radius: 5px;
-}
-input::-webkit-input-placeholder{
-    margin-left:11px;
 font-family: 'Lexend Deca';
 font-style: normal;
 font-weight: 400;
 font-size: 19.976px;
 line-height: 25px;
 color: #DBDBDB;
-}
-input:-moz-placeholder {
-    margin-left:11px;
-font-family: 'Lexend Deca';
-font-style: normal;
-font-weight: 400;
-font-size: 19.976px;
-line-height: 25px;
-color: #DBDBDB;
-}
+padding-left:11px;
 
+}
 button{
+box-sizing: border-box;
 width: 303px;
 height: 45px;
-left: 36px;
-top: 381px;
 border-width:0px;
 background: #52B6FF;
 border-radius: 4.63636px;
+margin-bottom:25px;
+font-family: 'Lexend Deca';
+font-style: normal;
+font-weight: 400;
+font-size: 20.976px;
+line-height: 26px;
+text-align: center;
+color: #FFFFFF;
 }
 
 p{

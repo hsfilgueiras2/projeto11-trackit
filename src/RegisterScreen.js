@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import logo from "./assets/imgs/TrackIt.png";
+import { useNavigate } from 'react-router-dom';
 
 export default function RegisterScreen() {
+    const navigate =useNavigate();
     const [sentRequest, setSentRequest] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -24,9 +27,6 @@ export default function RegisterScreen() {
             registration.catch(error=>{console.log("PEGO NO CATCH");console.log(error.response.data.message);setSentRequest(false)})
 	    }}, [sentRequest]);
 
-    
-
-
     if(sentRequest ===true){
         return(
             <h1>LOADING</h1>
@@ -34,6 +34,7 @@ export default function RegisterScreen() {
     }
     return (
         <RegisterStyled>
+            <img src={logo} alt='TrackIt Logo'></img>
             <input placeholder='email' value={email} onChange={(e)=>setEmail(e.target.value)}>
             </input>
             <input placeholder='senha' value={password} onChange={(e)=>setPassword(e.target.value)}>
@@ -50,6 +51,12 @@ export default function RegisterScreen() {
     )
 }
 const RegisterStyled = styled.div`
+img{
+    height:180px;
+    width:180px;
+    margin-top:70px;
+    margin-bottom:32px;
+}
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -58,15 +65,11 @@ input{
     box-sizing: border-box;
     width: 303px;
 height: 45px;
-left: 36px;
-top: 330px;
-
+margin-bottom:6px;
 background: #FFFFFF;
 border: 1px solid #D5D5D5;
 border-radius: 5px;
-}
-input::-webkit-input-placeholder{
-    margin-left:11px;
+padding-left:11px;
 font-family: 'Lexend Deca';
 font-style: normal;
 font-weight: 400;
@@ -74,24 +77,21 @@ font-size: 19.976px;
 line-height: 25px;
 color: #DBDBDB;
 }
-input:-moz-placeholder {
-    margin-left:11px;
-font-family: 'Lexend Deca';
-font-style: normal;
-font-weight: 400;
-font-size: 19.976px;
-line-height: 25px;
-color: #DBDBDB;
-}
-
 button{
+    box-sizing: border-box;
 width: 303px;
 height: 45px;
-left: 36px;
-top: 381px;
 border-width:0px;
 background: #52B6FF;
 border-radius: 4.63636px;
+font-family: 'Lexend Deca';
+font-style: normal;
+font-weight: 400;
+font-size: 20.976px;
+line-height: 26px;
+text-align: center;
+color: #FFFFFF;
+margin-bottom:25px;
 }
 
 p{
